@@ -170,21 +170,20 @@ export default Movie;
 
 export async function getStaticPaths() {
   let page = 1,
-    totalPages = 1,
+    maxPages = 10,
     paths = [];
 
   do {
     const { data } = await movieDb.get(`/movie/popular?page=${page}`);
-    if (totalPages !== data.total_pages) {
-      totalPages = data.total_pages;
-    }
     if (Array.isArray(data?.results) && data.results.length > 0) {
       data.results.forEach(({ id }) => {
         paths.push({ params: { id: `${id}` } });
       });
+    } else {
+      break;
     }
     page += 1;
-  } while (page <= totalPages);
+  } while (page <= maxPages);
 
   return {
     paths,
