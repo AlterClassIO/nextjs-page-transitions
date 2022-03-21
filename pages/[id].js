@@ -15,7 +15,7 @@ const fadeInUp = {
     y: 0,
     opacity: 1,
     transition: {
-      duration: 0.5,
+      duration: 0.3,
       ease: 'easeOut',
     },
   },
@@ -189,7 +189,7 @@ export async function getStaticPaths() {
       });
     }
     page += 1;
-  } while (page <= 10);
+  } while (page <= totalPages);
 
   return {
     paths,
