@@ -4,7 +4,7 @@ const Layout = ({ children = null }) => (
   <div>
     <header className="z-50 fixed top-0 inset-x-0 bg-indigo-600 hover:bg-indigo-500 text-white transition">
       <a
-        href="https://alterclass.io/tutorials"
+        href="https://alterclass.io/tutorials/how-to-add-page-transitions-with-nextjs-and-framer-motion"
         target="_blank"
         rel="noopener noreferrer"
         className="block font-medium truncate text-center px-4 sm:px-6 py-2"
