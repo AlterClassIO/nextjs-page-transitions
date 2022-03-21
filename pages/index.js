@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import movieDb from '@/lib/movieDb';
+import Layout from '@/components/Layout';
 
 const fadeInUp = {
   initial: {
@@ -27,7 +28,7 @@ const stagger = {
 
 export default function Home({ movies = [] }) {
   return (
-    <>
+    <Layout>
       <Head>
         <title>Next.js page transitions | Movies</title>
         <meta name="description" content="Next.js page transitions | Movies" />
@@ -65,7 +66,7 @@ export default function Home({ movies = [] }) {
           </motion.div>
         </div>
       </motion.div>
-    </>
+    </Layout>
   );
 }
 

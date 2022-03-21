@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { format } from 'date-fns';
 import movieDb from '@/lib/movieDb';
+import Layout from '@/components/Layout';
 import { ArrowSmLeftIcon } from '@heroicons/react/outline';
 
 const fadeInUp = {
@@ -23,7 +24,7 @@ const fadeInUp = {
 
 const Movie = ({ movie = null, credits = null }) => {
   return (
-    <>
+    <Layout>
       <Head>
         <title>{movie?.title}</title>
         <meta name="description" content={movie?.overview} />
@@ -167,7 +168,7 @@ const Movie = ({ movie = null, credits = null }) => {
           </div>
         </div>
       </motion.div>
-    </>
+    </Layout>
   );
 };
 
