@@ -33,12 +33,12 @@ const Movie = ({ movie = null, credits = null }) => {
       <div>
         <div className="space-y-10">
           <div className="relative w-full h-full">
-            <div className="absolute z-10 inset-0 bg-gray-900 bg-opacity-90" />
+            <div className="hiddem sm:block absolute z-10 inset-0 bg-gray-900 bg-opacity-90" />
 
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="absolute inset-0"
+              className="hidden sm:block absolute inset-0"
             >
               {movie?.backdrop_path ? (
                 <Image
@@ -50,15 +50,17 @@ const Movie = ({ movie = null, credits = null }) => {
             </motion.div>
 
             <div className="container mx-auto text-white">
-              <div className="flex gap-12 px-4 sm:px-6 py-12">
-                <motion.div variants={fadeInUp} className="z-10 shrink-0">
+              <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 lg:gap-12 sm:py-12 sm:px-6">
+                <motion.div
+                  variants={fadeInUp}
+                  className="z-10 relative w-full sm:w-[300px] h-[450px] shrink-0 sm:px-6 sm:pt-12"
+                >
                   {movie?.poster_path ? (
                     <Image
                       src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
                       alt="Poster"
-                      width={300}
-                      height={450}
-                      className="rounded-lg"
+                      layout="fill"
+                      className="sm:rounded-lg"
                     />
                   ) : null}
                 </motion.div>
@@ -69,12 +71,12 @@ const Movie = ({ movie = null, credits = null }) => {
                       transition: { staggerChildren: 0.05 },
                     },
                   }}
-                  className="relative z-10 py-6"
+                  className="relative z-10 px-4 sm:px-6 pb-12 pt-6"
                 >
                   <Link href="/" passHref>
                     <motion.a
                       variants={fadeInUp}
-                      className="text-sm text-opacity-50 hover:text-opacity-100 inline-flex items-center space-x-1 transition"
+                      className="text-sm text-opacity-50 hover:text-opacity-100 flex items-center space-x-1 transition"
                     >
                       <ArrowSmLeftIcon className="shrink-0 w-5 h-5 mt-px" />
                       <span>Back to movies</span>
@@ -83,21 +85,21 @@ const Movie = ({ movie = null, credits = null }) => {
 
                   <motion.h1
                     variants={fadeInUp}
-                    className="mt-4 font-bold text-4xl"
+                    className="mt-4 font-bold text-2xl sm:text-4xl"
                   >
                     {movie?.title}
                   </motion.h1>
 
                   <motion.div
                     variants={fadeInUp}
-                    className="mt-1 inline-flex items-center space-x-2 text-gray-400"
+                    className="mt-1 inline-flex flex-col sm:flex-row sm:items-center gap-2 text-sm sm:text-normal text-gray-400"
                   >
                     <span>
                       {movie?.release_date
                         ? format(new Date(movie.release_date), 'MM-dd-yyyy')
                         : null}
                     </span>
-                    <span>-</span>
+                    <span className="hidden sm:inline">-</span>
                     <span>
                       {movie?.genres.map(({ name }) => name).join(', ')}
                     </span>
