@@ -83,39 +83,47 @@ const Movie = ({ movie = null, credits = null }) => {
                     </motion.a>
                   </Link>
 
-                  <motion.h1
-                    variants={fadeInUp}
-                    className="mt-4 font-bold text-2xl sm:text-4xl"
-                  >
-                    {movie?.title}
-                  </motion.h1>
+                  <div className="mt-4">
+                    <motion.h1
+                      variants={fadeInUp}
+                      className="font-bold text-2xl sm:text-4xl"
+                    >
+                      {movie?.title}
+                    </motion.h1>
+                  </div>
 
-                  <motion.div
-                    variants={fadeInUp}
-                    className="mt-1 inline-flex flex-col sm:flex-row sm:items-center gap-2 text-sm sm:text-normal text-gray-400"
-                  >
-                    <span>
-                      {movie?.release_date
-                        ? format(new Date(movie.release_date), 'MM-dd-yyyy')
-                        : null}
-                    </span>
-                    <span className="hidden sm:inline">-</span>
-                    <span>
-                      {movie?.genres.map(({ name }) => name).join(', ')}
-                    </span>
-                  </motion.div>
+                  <div className="mt-1">
+                    <motion.div
+                      variants={fadeInUp}
+                      className="inline-flex flex-col sm:flex-row sm:items-center gap-2 text-sm sm:text-normal text-gray-400"
+                    >
+                      <span>
+                        {movie?.release_date
+                          ? format(new Date(movie.release_date), 'MM/dd/yyyy')
+                          : null}
+                      </span>
+                      <span className="hidden sm:inline">-</span>
+                      <span>
+                        {movie?.genres.map(({ name }) => name).join(', ')}
+                      </span>
+                    </motion.div>
+                  </div>
 
-                  <motion.p
-                    variants={fadeInUp}
-                    className="mt-4 italic text-gray-300"
-                  >
-                    {movie?.tagline}
-                  </motion.p>
+                  <div className="mt-4">
+                    <motion.p
+                      variants={fadeInUp}
+                      className="italic text-gray-300"
+                    >
+                      {movie?.tagline}
+                    </motion.p>
+                  </div>
 
-                  <motion.div variants={fadeInUp} className="mt-6">
-                    <h3 className="font-semibold text-lg">Overview</h3>
-                    <p className="mt-1 text-gray-300">{movie?.overview}</p>
-                  </motion.div>
+                  <div className="mt-6">
+                    <motion.div variants={fadeInUp}>
+                      <h3 className="font-semibold text-lg">Overview</h3>
+                      <p className="mt-1 text-gray-300">{movie?.overview}</p>
+                    </motion.div>
+                  </div>
                 </motion.div>
               </div>
             </div>
