@@ -30,7 +30,7 @@ const Movie = ({ movie = null, credits = null }) => {
         <meta name="description" content={movie?.overview} />
       </Head>
 
-      <motion.div initial="initial" animate="animate" exit={{ opacity: 0 }}>
+      <div>
         <div className="space-y-10">
           <div className="relative w-full h-full">
             <div className="absolute z-10 inset-0 bg-gray-900 bg-opacity-90" />
@@ -161,7 +161,7 @@ const Movie = ({ movie = null, credits = null }) => {
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
     </Layout>
   );
 };

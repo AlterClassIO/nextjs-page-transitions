@@ -1,7 +1,8 @@
 import { HeartIcon } from '@heroicons/react/solid';
+import { motion } from 'framer-motion';
 
 const Layout = ({ children = null }) => (
-  <div>
+  <motion.div initial="initial" animate="animate" exit={{ opacity: 0 }}>
     <header className="z-50 fixed top-0 inset-x-0 bg-indigo-600 hover:bg-indigo-500 text-white transition">
       <a
         href="https://alterclass.io/tutorials/how-to-add-page-transitions-with-nextjs-and-framer-motion"
@@ -35,7 +36,7 @@ const Layout = ({ children = null }) => (
         </p>
       </div>
     </footer>
-  </div>
+  </motion.div>
 );
 
 export default Layout;

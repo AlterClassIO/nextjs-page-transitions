@@ -36,12 +36,7 @@ export default function Home({ movies = [] }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <motion.div
-        initial="initial"
-        animate="animate"
-        exit={{ opacity: 0 }}
-        className="container mx-auto"
-      >
+      <div className="container mx-auto">
         <div className="px-4 sm:px-6 py-12">
           <motion.div
             variants={stagger}
@@ -85,7 +80,7 @@ export default function Home({ movies = [] }) {
             ))}
           </motion.div>
         </div>
-      </motion.div>
+      </div>
     </Layout>
   );
 }
