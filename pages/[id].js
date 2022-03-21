@@ -51,13 +51,7 @@ const Movie = ({ movie = null, credits = null }) => {
 
             <div className="container mx-auto text-white">
               <div className="flex gap-12 px-4 sm:px-6 py-12">
-                <motion.div
-                  variants={{
-                    initial: { x: 100, opacity: 0 },
-                    animate: { x: 0, opacity: 1 },
-                  }}
-                  className="z-10 shrink-0"
-                >
+                <motion.div variants={fadeInUp} className="z-10 shrink-0">
                   {movie?.poster_path ? (
                     <Image
                       src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
