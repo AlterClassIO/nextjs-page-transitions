@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { format } from 'date-fns';
+import slugify from 'slugify';
 import movieDb from '@/lib/movieDb';
 import Layout from '@/components/Layout';
 import { ArrowSmLeftIcon } from '@heroicons/react/outline';
@@ -52,7 +53,9 @@ const Movie = ({ movie = null, credits = null }) => {
             <div className="container mx-auto text-white">
               <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 lg:gap-12 sm:py-12 sm:px-6">
                 <motion.div
-                  variants={fadeInUp}
+                  initial={{ x: 100, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ duration: 0.3 }}
                   className="z-10 relative w-full sm:w-[300px] h-[450px] shrink-0 sm:px-6 sm:pt-12"
                 >
                   {movie?.poster_path ? (
@@ -73,57 +76,52 @@ const Movie = ({ movie = null, credits = null }) => {
                   }}
                   className="relative z-10 px-4 sm:px-6 pb-12 pt-6"
                 >
-                  <Link href="/" passHref>
-                    <motion.a
-                      variants={fadeInUp}
-                      className="text-sm text-opacity-50 hover:text-opacity-100 flex items-center space-x-1 transition"
-                    >
-                      <ArrowSmLeftIcon className="shrink-0 w-5 h-5 mt-px" />
-                      <span>Back to movies</span>
-                    </motion.a>
-                  </Link>
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Link href="/">
+                      <a className="text-sm opacity-50 hover:opacity-100 flex items-center space-x-1 transition">
+                        <ArrowSmLeftIcon className="shrink-0 w-5 h-5 mt-px" />
+                        <span>Back to movies</span>
+                      </a>
+                    </Link>
+                  </motion.div>
 
-                  <div className="mt-4">
-                    <motion.h1
-                      variants={fadeInUp}
-                      className="font-bold text-2xl sm:text-4xl"
-                    >
-                      {movie?.title}
-                    </motion.h1>
-                  </div>
+                  <motion.h1
+                    variants={fadeInUp}
+                    className="mt-4 font-bold text-2xl sm:text-4xl"
+                  >
+                    {movie?.title}
+                  </motion.h1>
 
-                  <div className="mt-1">
-                    <motion.div
-                      variants={fadeInUp}
-                      className="inline-flex flex-col sm:flex-row sm:items-center gap-2 text-sm sm:text-normal text-gray-400"
-                    >
-                      <span>
-                        {movie?.release_date
-                          ? format(new Date(movie.release_date), 'MM/dd/yyyy')
-                          : null}
-                      </span>
-                      <span className="hidden sm:inline">-</span>
-                      <span>
-                        {movie?.genres.map(({ name }) => name).join(', ')}
-                      </span>
-                    </motion.div>
-                  </div>
+                  <motion.div
+                    variants={fadeInUp}
+                    className="mt-1 inline-flex flex-col sm:flex-row sm:items-center gap-2 text-sm sm:text-normal text-gray-400"
+                  >
+                    <span>
+                      {movie?.release_date
+                        ? format(new Date(movie.release_date), 'MM/dd/yyyy')
+                        : null}
+                    </span>
+                    <span className="hidden sm:inline">-</span>
+                    <span>
+                      {movie?.genres.map(({ name }) => name).join(', ')}
+                    </span>
+                  </motion.div>
 
-                  <div className="mt-4">
-                    <motion.p
-                      variants={fadeInUp}
-                      className="italic text-gray-300"
-                    >
-                      {movie?.tagline}
-                    </motion.p>
-                  </div>
+                  <motion.p
+                    variants={fadeInUp}
+                    className="mt-4 italic text-gray-300"
+                  >
+                    {movie?.tagline}
+                  </motion.p>
 
-                  <div className="mt-6">
-                    <motion.div variants={fadeInUp}>
-                      <h3 className="font-semibold text-lg">Overview</h3>
-                      <p className="mt-1 text-gray-300">{movie?.overview}</p>
-                    </motion.div>
-                  </div>
+                  <motion.div variants={fadeInUp} className="mt-6">
+                    <h3 className="font-semibold text-lg">Overview</h3>
+                    <p className="mt-1 text-gray-300">{movie?.overview}</p>
+                  </motion.div>
                 </motion.div>
               </div>
             </div>
@@ -186,8 +184,12 @@ export async function getStaticPaths() {
   do {
     const { data } = await movieDb.get(`/movie/popular?page=${page}`);
     if (Array.isArray(data?.results) && data.results.length > 0) {
-      data.results.forEach(({ id }) => {
-        paths.push({ params: { id: `${id}` } });
+      data.results.forEach(({ id, title }) => {
+        const slug = slugify(title, {
+          lower: true,
+          strict: true,
+        });
+        paths.push({ params: { slug: `${id}-${slug}` } });
       });
     } else {
       break;
@@ -202,9 +204,10 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const { id } = params;
+  const { slug } = params;
 
   try {
+    const id = slug.split('-')[0];
     const [{ data: movie }, { data: credits }] = await Promise.all([
       movieDb.get(`/movie/${id}`),
       movieDb.get(`/movie/${id}/credits`),
