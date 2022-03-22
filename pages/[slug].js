@@ -63,6 +63,7 @@ const Movie = ({ movie = null, credits = null }) => {
                       src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
                       alt="Poster"
                       layout="fill"
+                      priority={true}
                       className="sm:rounded-lg"
                     />
                   ) : null}
